@@ -38,6 +38,7 @@ SPACY_MODEL_MAPPING = {
 
 
 EMAIL_PATTERN = "\S*@\S*\s?"
+URL_PATTERN = "http\S+"
 
 
 class Preprocessing:
@@ -86,6 +87,8 @@ class Preprocessing:
         :type remove_numbers: bool
         :param remove_emails: if true, email addresses will be removed
         :type remove_emails: bool
+        :param remove_urls: if true, URLs will be removed
+        :type remove_urls: bool
         :param remove_stopwords_spacy: bool , if true use spacy to remove stopwords (default: true)
         :param lemmatize: if true, words will be lemmatized using a spacy model according to the language that has been
         set (default: true)
@@ -125,6 +128,7 @@ class Preprocessing:
         self.num_processes = num_processes
         self.remove_numbers = remove_numbers
         self.remove_emails = remove_emails
+        self.remove_urls = remove_urls
         self.save_original_indexes = save_original_indexes
         self.entities = entities
 
@@ -444,6 +448,9 @@ class Preprocessing:
 
             if self.remove_emails:
                 new_d = re.sub(EMAIL_PATTERN, "", new_d)
+
+            if self.remove_urls:
+                new_d = re.sub(URL_PATTERN, "", new_d)
                 
             if self.lowercase:
                 new_d = new_d.lower()
