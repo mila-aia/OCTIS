@@ -53,6 +53,7 @@ class Preprocessing:
         punctuation: str = string.punctuation,
         remove_numbers: bool = True,
         remove_emails: bool = True,
+        remove_urls: bool = True,
         lemmatize: bool = True,
         stopword_list: str | list[str] = None,
         min_chars: int = 1,
