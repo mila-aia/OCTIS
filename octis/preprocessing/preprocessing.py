@@ -475,9 +475,9 @@ class Preprocessing:
                         if token.lemma_ not in set(self.stopwords)
                     ]
                 else:
-                    new_d = [token.lemma_ for token in self.spacy_model(new_d)]
+                    new_d = [token.lemma_ for token in new_d]
 
-            new_d = " ".join([token_text for token_text in new_d])
+            new_d = " ".join([str(token_text) for token_text in new_d])
             if self.remove_punctuation:
                 new_d = new_d.translate(
                     str.maketrans(
