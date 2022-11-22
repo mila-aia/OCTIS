@@ -1,17 +1,18 @@
 # mypy: ignore-errors
 # flake8: noqa
 
+from collections import Counter
+import multiprocessing as mp
+from pathlib import Path
 import re
 import string
-import multiprocessing as mp
-import spacy
+from typing import Union
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-from pathlib import Path
-from octis.dataset.dataset import Dataset
-from collections import Counter
 import numpy as np
+import spacy
 from tqdm import tqdm
+from octis.dataset.dataset import Dataset
 
 
 """
@@ -55,7 +56,7 @@ class Preprocessing:
         remove_emails: bool = True,
         remove_urls: bool = True,
         lemmatize: bool = True,
-        stopword_list: str | list[str] = None,
+        stopword_list: Union[str, list[str]] = None,
         min_chars: int = 1,
         min_words_docs: int = 0,
         language: str = "english",
