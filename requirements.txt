@@ -9,6 +9,6 @@ torch==1.12.1
 numpy==1.23.4
 libsvm==3.23.0.4
 flask==2.2.2
-sentence_transformers
+sentence_transformers==2.2.2
 requests==2.28.1
 tomotopy==0.12.3
