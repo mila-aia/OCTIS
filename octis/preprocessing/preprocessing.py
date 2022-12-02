@@ -4,6 +4,7 @@
 from collections import Counter
 import multiprocessing as mp
 from pathlib import Path
+from gensim.corpora.dictionary import Dictionary
 import re
 import string
 from typing import Union
@@ -221,9 +222,7 @@ class Preprocessing:
 
         vocabulary = self.filter_words(docs)
         print("created vocab")
-        # with Pool(self.num_processes) as p:
-        #    final_docs, final_labels = p.starmap(self._foo, product(docs, vocabulary, labels_path, repeat=2))
-        print(len(vocabulary))
+        
         final_docs, final_labels, document_indexes = [], [], []
         if labels_path is not None:
             if multilabel:
@@ -271,11 +270,15 @@ class Preprocessing:
         )
         if self.verbose:
             print("words filtering done")
+        
+        # Make sure vocabulary is still consistent with the content of docs:
+        dictionary = Dictionary(final_docs,  prune_at=None)
+        vocabulary = sorted(dictionary.token2id.keys())
+        
         metadata = {
             "total_documents": len(docs),
             "vocabulary_length": len(vocabulary),
             "preprocessing-info": self.preprocessing_steps
-            # ,"labels": list(set(final_labels)), "total_labels": len(set(final_labels))
         }
         if self.split:
             if len(final_labels) > 0:
